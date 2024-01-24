@@ -1,5 +1,9 @@
 ﻿//抽奖人员名单
-var allPerson = "张三;李四;陈五;王六;蔡七;赖八";
+var allPerson = [{ "工号": "001", "姓名": "林一", "部门": "洗菜部" }, { "工号": "002", "姓名": "卫二", "部门": "洗菜部" },
+{ "工号": "003", "姓名": "周三", "部门": "切菜部" }, { "工号": "004", "姓名": "吴四", "部门": "切菜部" },
+{ "工号": "005", "姓名": "赖五", "部门": "切菜部" }, { "工号": "006", "姓名": "韩六", "部门": "端盘部" },
+{ "工号": "007", "姓名": "董七", "部门": "端盘部" }, { "工号": "008", "姓名": "陈八", "部门": "端盘部" }];
+
 //领导人员名单
 var leaderArr = ["张三"];
 //未中奖人员名单
@@ -8,6 +12,11 @@ var remainPerson = allPerson.toString().split(";");
 var luckyMan = [];
 var timer;//定时器
 var times = 1;//抽奖次数,如果不是第一次，不加粗显示领导姓名
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('fileInput').addEventListener('change', handleFile);
+});
+
 $(function () {
     iconAnimation();
     //开始抽奖
@@ -18,8 +27,8 @@ $(function () {
                 showDialog("请输入中奖人数");
                 return false;
             }
-            if ($("#txtNum").val() > 49) {
-                showDialog("一次最多只能输入49人");
+            if ($("#txtNum").val() > 490) {
+                showDialog("一次最多只能输入490人");
                 return false;
             }
             if ($("#txtNum").val() > remainPerson.length) {
@@ -36,7 +45,8 @@ $(function () {
         else {
             $("#btnStart").text("开始");//设置按钮文本为开始
             var luckyDrawNum = $("#txtNum").val();
-            startLuckDraw();//抽奖开始
+            getRandomPerson();
+            //startLuckDraw();//抽奖开始
 
             $("#luckyDrawing").fadeOut();
             clearInterval(timer);//停止输入框动画展示
@@ -51,7 +61,7 @@ $(function () {
         //确认重置对话框
         var confirmReset = false;
         showConfirm("确认重置吗？所有已中奖的人会重新回到抽奖池！", function () {
-            //熏置未中奖人员名单
+            //重置未中奖人员名单
             remainPerson = allPerson.toString().split(";");
             //中奖人数框置空
             $("#txtNum").val("").attr("placeholder", "请输入中奖人数");
@@ -65,6 +75,66 @@ $(function () {
         });
     });
 });
+
+
+//获取excel数据
+function handleFile(event) {
+    console.log("handleFile")
+    const file = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const data = e.target.result;
+            const workbook = XLSX.read(data, { type: 'binary' });
+
+            // 选择第一个工作表
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+
+            // 将工作表的数据转换成JSON对象
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 2 });
+
+            // 打印JSON对象
+            console.log(jsonData);
+
+            // 或者你可以将数据显示在页面上
+            displayData(jsonData);
+        };
+
+        reader.readAsBinaryString(file);
+    }
+}
+
+//（测试）显示excel数据
+function displayData(data) {
+    console.log("displayData")
+    const outputDiv = document.getElementById('output');
+
+    // 将数据格式化并显示在页面上
+    outputDiv.innerHTML = JSON.stringify(data, null, 2);
+}
+
+//抽选一人
+function getRandomPerson() {
+    if (allPerson.length === 0) {
+        console.log("所有人员已被抽取完毕。");
+        return null;
+    }
+
+    const randomIndex = Math.floor(Math.random() * allPerson.length);
+    const selectedPerson = allPerson[randomIndex];
+
+    // 从数组中移除已抽取的人员
+    allPerson.splice(randomIndex, 1);
+    console.log("getRandomPerson:", allPerson);
+    console.log("selectedPerson:", randomIndex, selectedPerson);
+
+    return selectedPerson;
+}
+
+
 
 //抽奖主程序
 function startLuckDraw() {
