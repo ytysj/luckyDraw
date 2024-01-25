@@ -23,18 +23,6 @@ $(function () {
     $("#btnStart").on("click", function () {
         //判断是开始还是结束
         if ($("#btnStart").text() === "开始") {
-            if (!$("#txtNum").val()) {
-                showDialog("请输入中奖人数");
-                return false;
-            }
-            if ($("#txtNum").val() > 490) {
-                showDialog("一次最多只能输入490人");
-                return false;
-            }
-            if ($("#txtNum").val() > remainPerson.length) {
-                showDialog("当前抽奖人数大于奖池总人数<br>当前抽奖人数：<b>" + $("#txtNum").val() + "</b>人,奖池人数：<b>" + remainPerson.length + "</b>人");
-                return false;
-            }
             $("#result").fadeOut();
             //显示动画框，隐藏中奖框
             $("#luckyDrawing").show().next().addClass("hide");
@@ -44,16 +32,14 @@ $(function () {
         }
         else {
             $("#btnStart").text("开始");//设置按钮文本为开始
-            var luckyDrawNum = $("#txtNum").val();
             getRandomPerson();
             //startLuckDraw();//抽奖开始
 
             $("#luckyDrawing").fadeOut();
             clearInterval(timer);//停止输入框动画展示
             $("#luckyDrawing").val(luckyMan[luckyMan.length - 1]);//输入框显示最后一个中奖名字
-            $("#result").fadeIn().find("div").removeClass().addClass("p" + luckyDrawNum);//隐藏输入框，显示中奖框
+            $("#result").fadeIn().find("div").removeClass().addClass("p" + 1);//隐藏输入框，显示中奖框
             $("#bgLuckyDrawEnd").addClass("bg");//添加中奖背景光辉
-            $("#txtNum").attr("placeholder", "输入中奖人数(" + remainPerson.length + ")");
         }
     });
 
