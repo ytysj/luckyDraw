@@ -1,17 +1,27 @@
-﻿//抽奖人员名单
+﻿//(测试)抽奖人员名单
 var allPerson = [{ "工号": "001", "姓名": "林一", "部门": "洗菜部" }, { "工号": "002", "姓名": "卫二", "部门": "洗菜部" },
 { "工号": "003", "姓名": "周三", "部门": "切菜部" }, { "工号": "004", "姓名": "吴四", "部门": "切菜部" },
 { "工号": "005", "姓名": "赖五", "部门": "切菜部" }, { "工号": "006", "姓名": "韩六", "部门": "端盘部" },
 { "工号": "007", "姓名": "董七", "部门": "端盘部" }, { "工号": "008", "姓名": "陈八", "部门": "端盘部" }];
 
-//领导人员名单
+//(待删除)领导人员名单
 var leaderArr = ["张三"];
-//未中奖人员名单
-var remainPerson = allPerson.toString().split(";");
-//中奖人员名单
+//(待删除)未中奖人员名单
+var remainPerson = JSON.parse(JSON.stringify(allPerson));
+
+//(待删除)中奖人员名单
 var luckyMan = [];
+
+var times = 1;//(待删除)抽奖次数,如果不是第一次，不加粗显示领导姓名
+
 var timer;//定时器
-var times = 1;//抽奖次数,如果不是第一次，不加粗显示领导姓名
+var cfg_page_visible = false;//配置页面是否显示
+
+var cur_gift_idx = 0;//当前在抽第几个奖
+var third_gift_num = 0;//三等奖数量
+var second_gift_num = 0;//二等奖数量
+var first_gift_num = 0;//一等奖数量
+
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('fileInput').addEventListener('change', handleFile);
@@ -20,7 +30,13 @@ document.addEventListener('DOMContentLoaded', function () {
 $(function () {
     iconAnimation();
     //开始抽奖
+
     $("#btnStart").on("click", function () {
+        if ((allPerson.length === 0)||(cur_gift_idx+1>(third_gift_num+second_gift_num+first_gift_num))){
+            showDialog("抽奖次数已用尽");
+            return null;
+        }
+        
         //判断是开始还是结束
         if ($("#btnStart").text() === "开始") {
             $("#result").fadeOut();
@@ -35,17 +51,15 @@ $(function () {
             getRandomPerson();
             //startLuckDraw();//抽奖开始
 
-            $("#luckyDrawing").fadeOut();
+            //$("#luckyDrawing").fadeOut();
             clearInterval(timer);//停止输入框动画展示
-            $("#luckyDrawing").val(luckyMan[luckyMan.length - 1]);//输入框显示最后一个中奖名字
+            //$("#luckyDrawing").val(luckyMan[luckyMan.length - 1]);//输入框显示最后一个中奖名字
             $("#result").fadeIn().find("div").removeClass().addClass("p" + 1);//隐藏输入框，显示中奖框
             $("#bgLuckyDrawEnd").addClass("bg");//添加中奖背景光辉
         }
     });
 
     $("#btnReset").on("click", function () {
-        //确认重置对话框
-        var confirmReset = false;
         showConfirm("确认重置吗？所有已中奖的人会重新回到抽奖池！", function () {
             //重置未中奖人员名单
             remainPerson = allPerson.toString().split(";");
@@ -57,8 +71,33 @@ $(function () {
             $("#bgLuckyDrawEnd").removeClass("bg");//移除背景光辉
             times++;
             console.log(times);
-
         });
+    });
+
+    $("#btnCfg").on("click", function () {
+        if(cfg_page_visible==false){
+            console.log("visible false")
+            $("#cfgPage").fadeIn();
+            cfg_page_visible = true;
+            $("#btnCfg").text("应用");
+        }
+        else{
+            console.log("visible true")
+            showConfirm("确认应用配置参数吗？会导致重置！", function () {
+                $("#cfgPage").fadeOut();
+                cfg_page_visible = false;
+                $("#btnCfg").text("配置");
+                //重置未中奖人员名单
+                remainPerson = allPerson.toString().split(";");
+                
+                //获取奖品数量
+                third_gift_num = $("#numInput3").val();
+                second_gift_num = $("#numInput2").val();
+                first_gift_num = $("#numInput1").val();
+                console.log("gift_num:",third_gift_num, second_gift_num, first_gift_num);
+            });
+
+        }
     });
 });
 
@@ -104,10 +143,6 @@ function displayData(data) {
 
 //抽选一人
 function getRandomPerson() {
-    if (allPerson.length === 0) {
-        console.log("所有人员已被抽取完毕。");
-        return null;
-    }
 
     const randomIndex = Math.floor(Math.random() * allPerson.length);
     const selectedPerson = allPerson[randomIndex];
@@ -137,18 +172,11 @@ function getPersonName(person){
 //获取部门
 function getPersonGroup(person){
     return person["部门"]
-
 }
 
 
-//抽奖主程序
+//抽奖主程序（待删除）
 function startLuckDraw() {
-    //抽奖人数
-    var luckyDrawNum = $("#txtNum").val();
-    if (luckyDrawNum > remainPerson.length) {
-        alert("抽奖人数大于奖池人数！请修改人数。或者点重置开始将新一轮抽奖！");
-        return false;
-    }
     //随机中奖人
     var randomPerson = getRandomArrayElements(remainPerson, luckyDrawNum);
     var tempHtml = "";
@@ -174,13 +202,14 @@ function startLuckDraw() {
 }
 
 //参考这篇文章：http://www.html-js.com/article/JS-rookie-rookie-learned-to-fly-in-a-moving-frame-beating-figures
-//跳动的数字
+//跳动的名字
 function move() {
     var $showName = $("#showName"); //显示内容的input的ID
     var interTime = 30;//设置间隔时间
     timer = setInterval(function () {
-        var i = GetRandomNum(0, remainPerson.length);
-        $showName.val(remainPerson[i]);//输入框赋值
+        var i = GetRandomNum(0, allPerson.length-1);
+        var name = getPersonName(allPerson[i]);
+        $showName.val(name);//输入框赋值
     }, interTime);
 }
 
