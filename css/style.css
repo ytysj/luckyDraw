@@ -185,7 +185,7 @@ body > div {
 
 body > div > header {
     margin: 0 auto;
-    height: 290px;
+    height: 100px;
     background: rgba(0, 0, 0, 0);
     text-align: center;
 }
@@ -197,7 +197,7 @@ body > div > header > div {
 body > div > section {
     background: rgba(0, 0, 0, 0);
     width: 558px;
-    height: 184px;
+    height: 384px;
     margin: 18px auto 0 auto;
     vertical-align: middle;
     text-align: center;
@@ -209,6 +209,7 @@ body > div > section > #result {
     height: 100%;
     text-align: center;
     display: table;
+    background-color: red;
 }
 
 body > div > section > #result > div {

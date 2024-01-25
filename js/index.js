@@ -33,15 +33,15 @@ $(function () {
 
     $("#btnStart").on("click", function () {
         if ((allPerson.length === 0)||(cur_gift_idx+1>(third_gift_num+second_gift_num+first_gift_num))){
-            showDialog("抽奖次数已用尽");
+            showDialog("抽奖次数已用尽！请重置或修改配置！");
             return null;
         }
-        
+
         //判断是开始还是结束
         if ($("#btnStart").text() === "开始") {
             $("#result").fadeOut();
             //显示动画框，隐藏中奖框
-            $("#luckyDrawing").show().next().addClass("hide");
+            $("#luckyDrawing").show();
             move();
             $("#btnStart").text("停止");
             $("#bgLuckyDrawEnd").removeClass("bg");
