@@ -31,6 +31,13 @@
                 <img id="btnRoll" src="css/img/roll_button.png">
                 <button id="btnStart">开始</button>
                 <button id="btnReset">重置</button>
+                <button id="btnCfg">配置</button>
+                <div class="container" id="cfgPage">
+                    <div>三等奖数量<input type="number" value=10 id="numInput3"></div>
+                    <div>二等奖数量<input type="number" value=5 id="numInput2"></div>
+                    <div>一等奖数量<input type="number" value=3  id="numInput1"></div>
+                    <div>员工名单<input type="file" id="fileInput"></div>
+                </div>
             </div>
         </footer>
 
@@ -41,13 +48,10 @@
             <title>Excel File Reader</title>
         </head>
 
-        <input type="file" id="fileInput">
-        <div>三等奖数量<input type="number" id="numInput3"></div>
-        <div>二等奖数量<input type="number" id="numInput2"></div>
-        <div>一等奖数量<input type="number" id="numInput1"></div>
         <div id="output"></div>
 
     </div>
+
     <div id="bgImage"></div>
     <div id="bgLuckyDrawEnd"></div>
     <img id="imTitle" src="css/img/title.png">
