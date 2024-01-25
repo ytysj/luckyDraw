@@ -88,8 +88,9 @@ html {
     position: absolute;
     left: 50%;
     width: 800px;
+    height: 400px;
     margin-left: -400px;
-    z-index: -100;
+    z-index: 103;
 }
 
 #iconDiv > span {
@@ -164,7 +165,7 @@ body {
 body > div {
     background: url(img/bg.png) no-repeat;
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     margin: -300px auto auto -400px;
     width: 800px;
@@ -298,7 +299,8 @@ body > div > footer {
 body > div > footer > div {
     vertical-align: middle;
     background: rgba(0, 0, 0, 0);
-    margin-top: 10px;
+    margin-top: 0px;
+    margin-left: 350px;
 }
 
 
@@ -336,4 +338,10 @@ body > div > footer > div > button#btnReset {
     padding: 0;
     display: inline-block;
     font-size: 1rem;
+}
+
+#pageDevInfo{
+    position: fixed;
+    bottom: 0;
+    right: 0.5%;
 }
