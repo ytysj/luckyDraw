@@ -130,10 +130,29 @@ function getRandomPerson() {
     allPerson.splice(randomIndex, 1);
     console.log("getRandomPerson:", allPerson);
     console.log("selectedPerson:", randomIndex, selectedPerson);
+    var num = getPersonNum(selectedPerson);
+    var name = getPersonName(selectedPerson);
+    var group = getPersonGroup(selectedPerson);
+    console.log("num:", num, "name:", name, "group:", group);
 
     return selectedPerson;
 }
 
+//获取工号
+function getPersonNum(person){
+    return person["工号"]
+}
+
+//获取姓名
+function getPersonName(person){
+    return person["姓名"]
+}
+
+//获取部门
+function getPersonGroup(person){
+    return person["部门"]
+
+}
 
 
 //抽奖主程序
