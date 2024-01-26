@@ -378,9 +378,14 @@ body > div > footer > div > div#cfgPage {
     top:12%;
 }
 
+.luckyBox{
+    margin-bottom: 10px;
+}
+
 .luckySuffix {
     font-size: 1rem;
     color: black;
+    margin-bottom: 10px;
 }
 
 .luckyName{
@@ -393,4 +398,36 @@ body > div > footer > div > div#cfgPage {
     font-size: 3rem;
     -webkit-text-stroke: 2px rgb(255, 174, 0);
     text-shadow: 4px 4px #fd6f68;
+}
+
+#gift4{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    text-align: center;
+}
+
+#gift3{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    text-align: center;
+}
+
+#gift2{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    text-align: center;
+}
+
+#gift1{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    text-align: center;
 }

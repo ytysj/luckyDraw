@@ -77,7 +77,7 @@ $(function () {
             var num = getPersonNum(selectedPerson);
             var name = getPersonName(selectedPerson);
             var group = getPersonGroup(selectedPerson);
-            var suffix = "(" + group +num+ ")&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+            var suffix = group+num;
             console.log("num:", num, "name:", name, "group:", group);
 
             //在跳动页面显示人名
@@ -85,15 +85,20 @@ $(function () {
 
             //添加到入选名单
             var element=document.getElementById(display_id);
-            var newEle=document.createElement("span");
+            var newBox=document.createElement("span");
+            newBox.className = "luckyBox";
+
+            var newEle=document.createElement("div");
             newEle.innerHTML=name;//添加名字
             newEle.className = "luckyName";
-            element.appendChild(newEle);
+            newBox.appendChild(newEle);
 
-            var newEle=document.createElement("span");
+            var newEle=document.createElement("div");
             newEle.className = "luckySuffix";
             newEle.innerHTML=suffix;//添加后缀
-            element.appendChild(newEle);
+            newBox.appendChild(newEle);
+
+            element.appendChild(newBox);
 
             cur_gift_idx += 1;
         }
@@ -190,7 +195,7 @@ function handleFile(event) {
 
 //抽选一人
 function getRandomPerson() {
-    currentTime = Date.now();
+    currentTime = Date.now();//TODO:
     var randomIndex = Math.floor(Math.random() * allPerson.length);
     var selectedPerson = allPerson[randomIndex];
 
