@@ -347,15 +347,6 @@ body > div > footer > div > button#btnStart {
     z-index: 101;
 }
 
-body > div > footer > div > button#btnReset {
-    width: 60px;
-    height: 37px;
-    background-color: #fd6f68;
-    padding: 0;
-    display: inline-block;
-    font-size: 1rem;
-}
-
 body > div > footer > div > button#btnCfg {
     width: 60px;
     height: 37px;

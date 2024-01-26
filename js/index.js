@@ -39,7 +39,7 @@ $(function () {
             return null;
         }
         if ((allPerson.length === 0)||(cur_gift_idx+1>(third_gift_num+second_gift_num+first_gift_num))){
-            showDialog("抽奖次数已用尽！请重置或修改配置！");
+            showDialog("抽奖次数已用尽！请重新修改配置！");
             return null;
         }
 
@@ -95,24 +95,8 @@ $(function () {
             newEle.innerHTML=suffix;//添加后缀
             element.appendChild(newEle);
 
-
             cur_gift_idx += 1;
         }
-    });
-
-    $("#btnReset").on("click", function () {
-        showConfirm("确认重置吗？所有已中奖的人会重新回到抽奖池！", function () {
-            //重置未中奖人员名单
-            remainPerson = allPerson.toString().split(";");
-            //中奖人数框置空
-            $("#txtNum").val("").attr("placeholder", "请输入中奖人数");
-            $("#showName").val("");
-            //隐藏中奖名单,然后显示抽奖框
-            $("#result").fadeOut();//.prev().fadeIn()
-            $("#bgLuckyDrawEnd").removeClass("bg");//移除背景光辉
-            times++;
-            console.log(times);
-        });
     });
 
     $("#btnCfg").on("click", function () {
