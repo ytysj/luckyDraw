@@ -130,9 +130,23 @@ $(function () {
 
                 //重置页面
                 $("#rollingName").fadeOut();
-                $("#giftTitle3").className = "hide";//把奖品标题的class，设置为hide
-                $("#giftTitle2").className = "hide";
-                $("#giftTitle1").className = "hide";
+                document.getElementById("giftTitle3").className="hide";//把奖品标题的class，设置为hide
+                document.getElementById("giftTitle2").className="hide";
+                document.getElementById("giftTitle1").className="hide";
+
+                //删除所有抽奖人名
+                var elements = document.querySelectorAll(".luckyName");// 获取所有指定类名为"luckyName"的元素
+                console.log("delete all luckyName", elements)
+                for (var i = 0; i < elements.length; i++) { // 遍历每个元素并移除它们
+                    var element = elements[i];
+                    element.parentNode.removeChild(element); // 或者直接使用 remove() 方法
+                }
+                elements = document.querySelectorAll(".luckySuffix");// 获取所有指定类名为"luckySuffix"的元素
+                console.log("delete all luckySuffix", elements)
+                for (var i = 0; i < elements.length; i++) { // 遍历每个元素并移除它们
+                    var element = elements[i];
+                    element.parentNode.removeChild(element); // 或者直接使用 remove() 方法
+                }
 
                 $("#cfgPage").fadeOut();
                 cfg_page_visible = false;

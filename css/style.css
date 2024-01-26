@@ -384,9 +384,11 @@ body > div > footer > div > div#cfgPage {
 .luckyName{
     font-size: 3rem;
     color: black;
+    text-shadow: 2px 2px #8a8a8a;
 }
 
 .giftTitle{
     font-size: 3rem;
-    color: black;
+    -webkit-text-stroke: 2px rgb(255, 174, 0);
+    text-shadow: 4px 4px #fd6f68;
 }
