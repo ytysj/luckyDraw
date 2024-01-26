@@ -52,13 +52,31 @@ $(function () {
             $("#bgLuckyDrawEnd").removeClass("bg");
         }
         else {
+            //确定奖品类型            
+            var display_id = "gift3";
+            console.log("正在抽取cur_gift_idx：", cur_gift_idx, third_gift_num+second_gift_num, third_gift_num+second_gift_num+first_gift_num);
+            if(cur_gift_idx<third_gift_num){
+                display_id = "gift3"
+            }
+            else if(cur_gift_idx<third_gift_num+second_gift_num){
+                display_id = "gift2"
+            }
+            else if(cur_gift_idx<third_gift_num+second_gift_num+first_gift_num){
+                display_id = "gift1"
+            }
+            else{
+                console.log("WARNING!cur_gift_idx out of range",cur_gift_idx, third_gift_num, second_gift_num, first_gift_num);
+                return null;
+            }
+            console.log("display_id:", display_id);
+
+            //设置样式
             $("#btnStart").text("开始");//设置按钮文本为开始
             clearInterval(timer);//停止输入框动画展示
             $("#bgLuckyDrawEnd").addClass("bg");//添加中奖背景光辉
 
             //抽选人员
             var selectedPerson = getRandomPerson();
-            cur_gift_idx += 1;
             var num = getPersonNum(selectedPerson);
             var name = getPersonName(selectedPerson);
             var group = getPersonGroup(selectedPerson);
@@ -66,14 +84,19 @@ $(function () {
             console.log("num:", num, "name:", name, "group:", group);
 
             //添加到入选名单
-            var element=document.getElementById("gift3");
-            var newEle=document.createElement("b");
+            var element=document.getElementById(display_id);
+            var newEle=document.createElement("span");
             newEle.innerHTML=name;//添加名字
+            newEle.className = "luckyName";
             element.appendChild(newEle);
 
-            var newEle=document.createElement("b");
+            var newEle=document.createElement("span");
+            newEle.className = "luckySuffix";
             newEle.innerHTML=suffix;//添加后缀
             element.appendChild(newEle);
+
+
+            cur_gift_idx += 1;
         }
     });
 
@@ -112,9 +135,9 @@ $(function () {
                 all_person_num = 8;//TODO:
                 
                 //获取奖品数量
-                third_gift_num = $("#numInput3").val();
-                second_gift_num = $("#numInput2").val();
-                first_gift_num = $("#numInput1").val();
+                third_gift_num = Number($("#numInput3").val());
+                second_gift_num = Number($("#numInput2").val());
+                first_gift_num = Number($("#numInput1").val());
                 console.log("gift_num:",third_gift_num, second_gift_num, first_gift_num);
             });
 

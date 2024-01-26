@@ -380,3 +380,11 @@ body > div > footer > div > div#cfgPage {
     position: relative;
     top:12%;
 }
+
+.luckySuffix {
+    font-size: 1rem;
+}
+
+.luckyName{
+    font-size: 3rem;
+}
