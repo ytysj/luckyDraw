@@ -209,7 +209,6 @@ body > div > section > #result {
     height: 100%;
     text-align: center;
     display: table;
-    background-color: red;
 }
 
 body > div > section > #result > div {
@@ -357,7 +356,12 @@ body > div > footer > div > button#btnCfg {
 }
 
 body > div > footer > div > div#cfgPage {
+    position: relative;
+    top: 5px;
+    right: -200px;
+    width: 350px;
     background-color: #fd6f68;
+    border-radius: 10px;
 }
 
 
@@ -374,8 +378,15 @@ body > div > footer > div > div#cfgPage {
 
 .luckySuffix {
     font-size: 1rem;
+    color: black;
 }
 
 .luckyName{
     font-size: 3rem;
+    color: black;
+}
+
+.giftTitle{
+    font-size: 3rem;
+    color: black;
 }

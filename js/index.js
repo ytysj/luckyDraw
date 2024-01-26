@@ -4,6 +4,7 @@ var allPerson = [{ "工号": "001", "姓名": "林一", "部门": "洗菜部" },
 { "工号": "005", "姓名": "赖五", "部门": "切菜部" }, { "工号": "006", "姓名": "韩六", "部门": "端盘部" },
 { "工号": "007", "姓名": "董七", "部门": "端盘部" }, { "工号": "008", "姓名": "陈八", "部门": "端盘部" }];
 var all_person_num = 0; //总员工人数
+var loaded_person_file = null;
 
 //(待删除)领导人员名单
 var leaderArr = ["张三"];
@@ -56,13 +57,16 @@ $(function () {
             var display_id = "gift3";
             console.log("正在抽取cur_gift_idx：", cur_gift_idx, third_gift_num+second_gift_num, third_gift_num+second_gift_num+first_gift_num);
             if(cur_gift_idx<third_gift_num){
-                display_id = "gift3"
+                display_id = "gift3";
+                document.getElementById("giftTitle3").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
             }
             else if(cur_gift_idx<third_gift_num+second_gift_num){
-                display_id = "gift2"
+                display_id = "gift2";
+                document.getElementById("giftTitle2").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
             }
             else if(cur_gift_idx<third_gift_num+second_gift_num+first_gift_num){
-                display_id = "gift1"
+                display_id = "gift1";
+                document.getElementById("giftTitle1").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
             }
             else{
                 console.log("WARNING!cur_gift_idx out of range",cur_gift_idx, third_gift_num, second_gift_num, first_gift_num);
@@ -82,6 +86,9 @@ $(function () {
             var group = getPersonGroup(selectedPerson);
             var suffix = "(" + group +num+ ")&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
             console.log("num:", num, "name:", name, "group:", group);
+
+            //在跳动页面显示人名
+            $("#showName").val(name);
 
             //添加到入选名单
             var element=document.getElementById(display_id);
@@ -109,20 +116,27 @@ $(function () {
         else{
             console.log("visible true")
             showConfirm("确认应用配置参数吗？会导致重置！", function () {
-                $("#cfgPage").fadeOut();
-                cfg_page_visible = false;
-                $("#btnCfg").text("配置");
-                //重置未中奖人员名单
-                remainPerson = allPerson.toString().split(";");
+                //加载人员名单
+                allPerson = JSON.parse(JSON.stringify(loaded_person_file));
                 
                 //获取员工总人数
-                all_person_num = 8;//TODO:
+                all_person_num = allPerson.length;
                 
                 //获取奖品数量
                 third_gift_num = Number($("#numInput3").val());
                 second_gift_num = Number($("#numInput2").val());
                 first_gift_num = Number($("#numInput1").val());
                 console.log("gift_num:",third_gift_num, second_gift_num, first_gift_num);
+
+                //重置页面
+                $("#rollingName").fadeOut();
+                $("#giftTitle3").className = "hide";//把奖品标题的class，设置为hide
+                $("#giftTitle2").className = "hide";
+                $("#giftTitle1").className = "hide";
+
+                $("#cfgPage").fadeOut();
+                cfg_page_visible = false;
+                $("#btnCfg").text("配置");
             });
 
         }
@@ -149,11 +163,10 @@ function handleFile(event) {
             // 将工作表的数据转换成JSON对象
             const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 2 });
 
+            loaded_person_file = JSON.parse(JSON.stringify(jsonData));
+
             // 打印JSON对象
             console.log(jsonData);
-
-            // 或者你可以将数据显示在页面上
-            displayData(jsonData);
         };
 
         reader.readAsBinaryString(file);
