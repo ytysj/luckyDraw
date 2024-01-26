@@ -4,17 +4,11 @@ var allPerson = [{ "工号": "001", "姓名": "林一", "部门": "洗菜部" },
 { "工号": "005", "姓名": "赖五", "部门": "切菜部" }, { "工号": "006", "姓名": "韩六", "部门": "端盘部" },
 { "工号": "007", "姓名": "董七", "部门": "端盘部" }, { "工号": "008", "姓名": "陈八", "部门": "端盘部" }];
 var all_person_num = 0; //总员工人数
-var loaded_person_file = null;
+var loaded_person_file = null;  //加载的员工名单文件
 
 //(待删除)领导人员名单
 var leaderArr = ["张三"];
-//(待删除)未中奖人员名单
-var remainPerson = JSON.parse(JSON.stringify(allPerson));
 
-//(待删除)中奖人员名单
-var luckyMan = [];
-
-var times = 1;//(待删除)抽奖次数,如果不是第一次，不加粗显示领导姓名
 
 var timer;//定时器
 var cfg_page_visible = false;//配置页面是否显示
@@ -32,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
 $(function () {
     iconAnimation();
     //开始抽奖
-
 
     $("#btnStart").on("click", function () {
         if(all_person_num===0){
@@ -117,13 +110,17 @@ $(function () {
             console.log("visible true")
             showConfirm("确认应用配置参数吗？会导致重置！", function () {
                 //加载人员名单
+                if(loaded_person_file==null){
+                    showDialog("尚未加载人员名单！");
+                    return false;
+                }
                 allPerson = JSON.parse(JSON.stringify(loaded_person_file));
+                loaded_person_file = null;  //清除加载的文件
                 
-                //获取员工总人数
-                all_person_num = allPerson.length;
-                
-                //获取奖品数量
-                third_gift_num = Number($("#numInput3").val());
+                //初始化参数
+                cur_gift_idx = 0;   //当前在抽第几个奖                
+                all_person_num = allPerson.length;  //获取员工总人数                
+                third_gift_num = Number($("#numInput3").val()); //获取奖品数量
                 second_gift_num = Number($("#numInput2").val());
                 first_gift_num = Number($("#numInput1").val());
                 console.log("gift_num:",third_gift_num, second_gift_num, first_gift_num);
@@ -133,6 +130,7 @@ $(function () {
                 document.getElementById("giftTitle3").className="hide";//把奖品标题的class，设置为hide
                 document.getElementById("giftTitle2").className="hide";
                 document.getElementById("giftTitle1").className="hide";
+                document.getElementById('fileInput').value = '';
 
                 //删除所有抽奖人名
                 var elements = document.querySelectorAll(".luckyName");// 获取所有指定类名为"luckyName"的元素
@@ -161,46 +159,37 @@ $(function () {
 //获取excel数据
 function handleFile(event) {
     console.log("handleFile")
-    const file = event.target.files[0];
+    var file = event.target.files[0];
 
     if (file) {
-        const reader = new FileReader();
+        var reader = new FileReader();
 
         reader.onload = function (e) {
-            const data = e.target.result;
-            const workbook = XLSX.read(data, { type: 'binary' });
+            var data = e.target.result;
+            var workbook = XLSX.read(data, { type: 'binary' });
 
             // 选择第一个工作表
-            const sheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[sheetName];
+            var sheetName = workbook.SheetNames[0];
+            var worksheet = workbook.Sheets[sheetName];
 
             // 将工作表的数据转换成JSON对象
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 2 });
-
+            var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 2 });
             loaded_person_file = JSON.parse(JSON.stringify(jsonData));
+            console.log("loaded_person_file:", loaded_person_file);
+            file="";
 
             // 打印JSON对象
-            console.log(jsonData);
+            //console.log(jsonData);
         };
 
         reader.readAsBinaryString(file);
     }
 }
 
-//（测试）显示excel数据
-function displayData(data) {
-    console.log("displayData")
-    const outputDiv = document.getElementById('output');
-
-    // 将数据格式化并显示在页面上
-    outputDiv.innerHTML = JSON.stringify(data, null, 2);
-}
-
 //抽选一人
 function getRandomPerson() {
-
-    const randomIndex = Math.floor(Math.random() * allPerson.length);
-    const selectedPerson = allPerson[randomIndex];
+    var randomIndex = Math.floor(Math.random() * allPerson.length);
+    var selectedPerson = allPerson[randomIndex];
 
     // 从数组中移除已抽取的人员
     allPerson.splice(randomIndex, 1);
@@ -222,32 +211,6 @@ function getPersonName(person){
 //获取部门
 function getPersonGroup(person){
     return person["部门"]
-}
-
-//抽奖主程序（待删除）
-function startLuckDraw() {
-    //随机中奖人
-    var randomPerson = getRandomArrayElements(remainPerson, luckyDrawNum);
-    var tempHtml = "";
-    $.each(randomPerson, function (i, person) {
-        var sizeStyle = "";
-        if (person.length > 3) {
-            sizeStyle = " style=font-size:" + 3 / person.length + "em";
-        }
-        if (leaderArr.indexOf(person) > -1 && times == 1) {
-            tempHtml += "<span><span " + sizeStyle + "><b>" + person + "</b></span></span>";
-        }
-        else {
-            tempHtml += "<span><span " + sizeStyle + ">" + person + "</span></span>";
-        }
-    });
-    $("#result>div").html(tempHtml);
-    //剩余人数剔除已中奖名单
-    remainPerson = remainPerson.delete(randomPerson);
-    //中奖人员
-    luckyMan = luckyMan.concat(randomPerson);
-    //设置抽奖人数框数字为空
-    $("#txtNum").val("");
 }
 
 //参考这篇文章：http://www.html-js.com/article/JS-rookie-rookie-learned-to-fly-in-a-moving-frame-beating-figures
