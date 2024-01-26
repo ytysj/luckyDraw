@@ -3,6 +3,7 @@ var allPerson = [{ "工号": "001", "姓名": "林一", "部门": "洗菜部" },
 { "工号": "003", "姓名": "周三", "部门": "切菜部" }, { "工号": "004", "姓名": "吴四", "部门": "切菜部" },
 { "工号": "005", "姓名": "赖五", "部门": "切菜部" }, { "工号": "006", "姓名": "韩六", "部门": "端盘部" },
 { "工号": "007", "姓名": "董七", "部门": "端盘部" }, { "工号": "008", "姓名": "陈八", "部门": "端盘部" }];
+var all_person_num = 0; //总员工人数
 
 //(待删除)领导人员名单
 var leaderArr = ["张三"];
@@ -31,7 +32,12 @@ $(function () {
     iconAnimation();
     //开始抽奖
 
+
     $("#btnStart").on("click", function () {
+        if(all_person_num===0){
+            showDialog("请先在配置页添加人员名单！");
+            return null;
+        }
         if ((allPerson.length === 0)||(cur_gift_idx+1>(third_gift_num+second_gift_num+first_gift_num))){
             showDialog("抽奖次数已用尽！请重置或修改配置！");
             return null;
@@ -39,23 +45,35 @@ $(function () {
 
         //判断是开始还是结束
         if ($("#btnStart").text() === "开始") {
-            $("#result").fadeOut();
-            //显示动画框，隐藏中奖框
-            $("#luckyDrawing").show();
+            //显示动画框
+            $("#rollingName").show();
             move();
             $("#btnStart").text("停止");
             $("#bgLuckyDrawEnd").removeClass("bg");
         }
         else {
             $("#btnStart").text("开始");//设置按钮文本为开始
-            getRandomPerson();
-            //startLuckDraw();//抽奖开始
-
-            //$("#luckyDrawing").fadeOut();
             clearInterval(timer);//停止输入框动画展示
-            //$("#luckyDrawing").val(luckyMan[luckyMan.length - 1]);//输入框显示最后一个中奖名字
-            $("#result").fadeIn().find("div").removeClass().addClass("p" + 1);//隐藏输入框，显示中奖框
             $("#bgLuckyDrawEnd").addClass("bg");//添加中奖背景光辉
+
+            //抽选人员
+            var selectedPerson = getRandomPerson();
+            cur_gift_idx += 1;
+            var num = getPersonNum(selectedPerson);
+            var name = getPersonName(selectedPerson);
+            var group = getPersonGroup(selectedPerson);
+            var suffix = "(" + group +num+ ")&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+            console.log("num:", num, "name:", name, "group:", group);
+
+            //添加到入选名单
+            var element=document.getElementById("gift3");
+            var newEle=document.createElement("b");
+            newEle.innerHTML=name;//添加名字
+            element.appendChild(newEle);
+
+            var newEle=document.createElement("b");
+            newEle.innerHTML=suffix;//添加后缀
+            element.appendChild(newEle);
         }
     });
 
@@ -89,6 +107,9 @@ $(function () {
                 $("#btnCfg").text("配置");
                 //重置未中奖人员名单
                 remainPerson = allPerson.toString().split(";");
+                
+                //获取员工总人数
+                all_person_num = 8;//TODO:
                 
                 //获取奖品数量
                 third_gift_num = $("#numInput3").val();
@@ -150,11 +171,6 @@ function getRandomPerson() {
     // 从数组中移除已抽取的人员
     allPerson.splice(randomIndex, 1);
     console.log("getRandomPerson:", allPerson);
-    console.log("selectedPerson:", randomIndex, selectedPerson);
-    var num = getPersonNum(selectedPerson);
-    var name = getPersonName(selectedPerson);
-    var group = getPersonGroup(selectedPerson);
-    console.log("num:", num, "name:", name, "group:", group);
 
     return selectedPerson;
 }
@@ -173,7 +189,6 @@ function getPersonName(person){
 function getPersonGroup(person){
     return person["部门"]
 }
-
 
 //抽奖主程序（待删除）
 function startLuckDraw() {
@@ -213,16 +228,26 @@ function move() {
     }, interTime);
 }
 
-//顶上的小图标，随机动画
+//顶上的小图标+按钮，随机动画
 function iconAnimation() {
-    var interTime = 200;//设置间隔时间
-    var $icon = $("#iconDiv>span");
+    var interTime1 = 200;//设置间隔时间
+    var $icon1 = $("#iconDiv>span");
     var arrAnimatoin = ["bounce", "flash", "pulse", "rubberBand", "shake", "swing", "wobble", "tada"];
     var timer2 = setInterval(function () {
-        var i = GetRandomNum(0, $icon.length);
+        var i = GetRandomNum(0, $icon1.length);
         var j = GetRandomNum(0, arrAnimatoin.length);
         //console.log("i:" + i + ",j:" + j);
-        $($icon[i]).removeClass().stop().addClass("animated " + arrAnimatoin[j]);//输入框赋值
-    }, interTime);
+        $($icon1[i]).removeClass().stop().addClass("animated " + arrAnimatoin[j]);//输入框赋值
+    }, interTime1);
+
+    var interTime2 = 800;//设置间隔时间
+    var $icon2 = $("#btnRoll");
+    var arrAnimatoin = ["shake", "swing", "wobble"];
+    var timer2 = setInterval(function () {
+        var i = GetRandomNum(0, $icon2.length);
+        var j = GetRandomNum(0, arrAnimatoin.length);
+        //console.log("i:" + i + ",j:" + j);
+        $($icon2[i]).removeClass().stop().addClass("animated " + arrAnimatoin[j]);//输入框赋值
+    }, interTime2);
 
 }
