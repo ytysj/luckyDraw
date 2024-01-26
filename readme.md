@@ -1,5 +1,7 @@
 # LuckyDraw 年会抽奖页面
 
+### 感谢@gavinjzx（阿提）贡献代码，我Fork出来做一些改动。
+
 ## 使用环境
 
 因为使用了css3 animation，所以建议使用chrome,firefox,IE10及以上（IE9及以下不支持css3 animation）。
