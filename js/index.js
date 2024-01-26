@@ -27,7 +27,7 @@ $(function () {
             showDialog("请先在配置页添加人员名单！");
             return null;
         }
-        if ((allPerson.length === 0)||(cur_gift_idx+1>(third_gift_num+second_gift_num+first_gift_num))){
+        if ((allPerson.length === 0)||(cur_gift_idx+1>(fourth_gift_num+third_gift_num+second_gift_num+first_gift_num))){
             showDialog("抽奖次数已用尽！请重新修改配置！");
             return null;
         }
@@ -42,7 +42,7 @@ $(function () {
         }
         else {
             //确定奖品类型            
-            var display_id = "gift3";
+            var display_id = "gift4";
             console.log("正在抽取cur_gift_idx：", cur_gift_idx, fourth_gift_num+third_gift_num+second_gift_num, 
                         third_gift_num+second_gift_num+first_gift_num);
             if(cur_gift_idx<fourth_gift_num){
