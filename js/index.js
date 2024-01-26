@@ -1,19 +1,14 @@
 ﻿//(测试)抽奖人员名单
-var allPerson = [{ "工号": "001", "姓名": "林一", "部门": "洗菜部" }, { "工号": "002", "姓名": "卫二", "部门": "洗菜部" },
-{ "工号": "003", "姓名": "周三", "部门": "切菜部" }, { "工号": "004", "姓名": "吴四", "部门": "切菜部" },
-{ "工号": "005", "姓名": "赖五", "部门": "切菜部" }, { "工号": "006", "姓名": "韩六", "部门": "端盘部" },
-{ "工号": "007", "姓名": "董七", "部门": "端盘部" }, { "工号": "008", "姓名": "陈八", "部门": "端盘部" }];
+var allPerson = [];
 var all_person_num = 0; //总员工人数
 var loaded_person_file = null;  //加载的员工名单文件
-
-//(待删除)领导人员名单
-var leaderArr = ["张三"];
 
 
 var timer;//定时器
 var cfg_page_visible = false;//配置页面是否显示
 
 var cur_gift_idx = 0;//当前在抽第几个奖
+var fourth_gift_num = 0;//四等奖数量
 var third_gift_num = 0;//三等奖数量
 var second_gift_num = 0;//二等奖数量
 var first_gift_num = 0;//一等奖数量
@@ -48,16 +43,21 @@ $(function () {
         else {
             //确定奖品类型            
             var display_id = "gift3";
-            console.log("正在抽取cur_gift_idx：", cur_gift_idx, third_gift_num+second_gift_num, third_gift_num+second_gift_num+first_gift_num);
-            if(cur_gift_idx<third_gift_num){
+            console.log("正在抽取cur_gift_idx：", cur_gift_idx, fourth_gift_num+third_gift_num+second_gift_num, 
+                        third_gift_num+second_gift_num+first_gift_num);
+            if(cur_gift_idx<fourth_gift_num){
+                display_id = "gift4";
+                document.getElementById("giftTitle4").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
+            }
+            else if(cur_gift_idx<fourth_gift_num+third_gift_num){
                 display_id = "gift3";
                 document.getElementById("giftTitle3").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
             }
-            else if(cur_gift_idx<third_gift_num+second_gift_num){
+            else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num){
                 display_id = "gift2";
                 document.getElementById("giftTitle2").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
             }
-            else if(cur_gift_idx<third_gift_num+second_gift_num+first_gift_num){
+            else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num+first_gift_num){
                 display_id = "gift1";
                 document.getElementById("giftTitle1").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
             }
@@ -119,14 +119,16 @@ $(function () {
                 
                 //初始化参数
                 cur_gift_idx = 0;   //当前在抽第几个奖                
-                all_person_num = allPerson.length;  //获取员工总人数                
+                all_person_num = allPerson.length;  //获取员工总人数
+                fourth_gift_num = Number($("#numInput4").val()); //获取奖品数量
                 third_gift_num = Number($("#numInput3").val()); //获取奖品数量
                 second_gift_num = Number($("#numInput2").val());
                 first_gift_num = Number($("#numInput1").val());
-                console.log("gift_num:",third_gift_num, second_gift_num, first_gift_num);
+                console.log("gift_num:",fourth_gift_num, third_gift_num, second_gift_num, first_gift_num);
 
                 //重置页面
                 $("#rollingName").fadeOut();
+                document.getElementById("giftTitle4").className="hide";//把奖品标题的class，设置为hide
                 document.getElementById("giftTitle3").className="hide";//把奖品标题的class，设置为hide
                 document.getElementById("giftTitle2").className="hide";
                 document.getElementById("giftTitle1").className="hide";
@@ -188,6 +190,7 @@ function handleFile(event) {
 
 //抽选一人
 function getRandomPerson() {
+    currentTime = Date.now();
     var randomIndex = Math.floor(Math.random() * allPerson.length);
     var selectedPerson = allPerson[randomIndex];
 
