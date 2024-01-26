@@ -297,18 +297,18 @@ body > div > footer > div {
 }
 
 
-body > div > footer > div #luckyDrawing {
+body > div > footer > div #rollingName {
     position: fixed;
     width: 250px;
     height: 60px;
     margin-left: -260px;
-    margin-top: 5px;
+    margin-top: 0px;
 }
 
-body > div > footer > div #luckyDrawing input {
+body > div > footer > div #rollingName input {
     width: 95%;
     height: 95%;
-    font-size: 4rem;
+    font-size: 5rem;
     padding: 1rem;
     text-align: center;
     border: none;
@@ -323,9 +323,14 @@ body > div > footer > div > button {
     border-radius: 1rem;
 }
 
+body > div > footer > div > button:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
 body > div > footer > div > img#btnRoll {
-    margin-top: 10px;
-    margin-left: -22px;
+    margin-top: 15px;
+    margin-left: -5px;
     position:absolute;
     z-index: 102;
 }
