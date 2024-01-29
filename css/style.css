@@ -76,13 +76,13 @@ html {
 }
 
 #bgImage {
-    background: url(img/bg.png) no-repeat;
+    /* background: url(img/bg.png) no-repeat; */
     position: absolute;
     z-index: -10;
 }
 
 #bgLuckyDrawEnd {
-    background: url(img/bg.png) no-repeat;
+    /* background: url(img/bg.png) no-repeat; */
     position: absolute;
     z-index: -10;
 }
@@ -313,6 +313,7 @@ body > div > footer > div #rollingName input {
     padding: 1rem;
     text-align: center;
     border: none;
+    background-color: transparent;
 }
 
 
@@ -360,7 +361,7 @@ body > div > footer > div > button#btnCfg {
 body > div > footer > div > div#cfgPage {
     position: absolute;
     top: 5px;
-    right: -200px;
+    right: -280px;
     width: 350px;
     background-color: #fd6f68;
     border-radius: 10px;
@@ -375,21 +376,25 @@ body > div > footer > div > div#cfgPage {
 
 #imTitle{
     position: relative;
-    top:12%;
+    top:10%;
 }
 
 .luckyBox{
+    width: 150px;
+    height: 150px;
     margin-bottom: 10px;
+    background: url(img/lucky_box.png) no-repeat;
 }
 
 .luckySuffix {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: black;
     margin-bottom: 10px;
 }
 
 .luckyName{
-    font-size: 3rem;
+    margin-top: 50px;
+    font-size: 2.5rem;
     color: black;
     text-shadow: 2px 2px #8a8a8a;
 }
