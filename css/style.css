@@ -76,14 +76,16 @@ html {
 }
 
 #bgImage {
-    /* background: url(img/bg.png) no-repeat; */
+    background: url(img/bg.png) no-repeat; 
     position: absolute;
     z-index: -10;
 }
 
 #bgLuckyDrawEnd {
-    /* background: url(img/bg.png) no-repeat; */
+    background: url(img/bg.png) no-repeat;
     position: absolute;
+    width: 100%;
+    height: 100%;
     z-index: -10;
 }
 
@@ -97,7 +99,7 @@ html {
 
 #iconDiv {
     position: absolute;
-    top: 34%;
+    top: 0%;
     left: 50%;
     width: 800px;
     height: 300px;
@@ -164,7 +166,7 @@ html {
 }
 
 body {
-    background: #FFC21C;
+    background: #c71f1f;
     height: 100%;
     width: 100%;
     margin: 0;
@@ -176,16 +178,13 @@ body {
 
 body > div {
     position: absolute;
-    top: 35%;
-    left: 20%;
-    margin: -300px auto auto -300px;
-    width: 1800px;
-    height: 1012px;
+    width: 1920px;
+    height: 1080px;
 }
 
 body > div > header {
     margin: 0 auto;
-    height: 100px;
+    height: 200px;
     background: rgba(0, 0, 0, 0);
     text-align: center;
 }
@@ -302,7 +301,7 @@ body > div > footer > div #rollingName {
     position: fixed;
     width: 250px;
     height: 60px;
-    margin-left: -260px;
+    margin-left: -300px;
     margin-top: 0px;
 }
 
@@ -314,6 +313,7 @@ body > div > footer > div #rollingName input {
     text-align: center;
     border: none;
     background-color: transparent;
+    color: white;
 }
 
 
@@ -388,15 +388,15 @@ body > div > footer > div > div#cfgPage {
 
 .luckySuffix {
     font-size: 1.5rem;
-    color: black;
+    color: white;
     margin-bottom: 10px;
 }
 
 .luckyName{
     margin-top: 50px;
     font-size: 2.5rem;
-    color: black;
-    text-shadow: 2px 2px #8a8a8a;
+    color: white;
+    text-shadow: 2px 2px #bbbbbb;
 }
 
 .giftTitle{

@@ -56,10 +56,21 @@ $(function () {
             else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num){
                 display_id = "gift2";
                 document.getElementById("giftTitle2").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
+
+                document.getElementById("giftTitle4").className="hide";//隐藏四等奖
+                hide_all_element("gift4");
+                //document.getElementById("gift4").className="hide"
             }
             else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num+first_gift_num){
                 display_id = "gift1";
                 document.getElementById("giftTitle1").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
+
+                document.getElementById("giftTitle4").className="hide";//隐藏四等奖和三等奖
+                hide_all_element("gift4");
+                //document.getElementById("gift4").className="hide"
+                document.getElementById("giftTitle3").className="hide";
+                hide_all_element("gift3");
+                //document.getElementById("gift3").className="hide"
             }
             else{
                 console.log("WARNING!cur_gift_idx out of range",cur_gift_idx, third_gift_num, second_gift_num, first_gift_num);
@@ -140,14 +151,8 @@ $(function () {
                 document.getElementById('fileInput').value = '';
 
                 //删除所有抽奖人名
-                var elements = document.querySelectorAll(".luckyName");// 获取所有指定类名为"luckyName"的元素
-                console.log("delete all luckyName", elements)
-                for (var i = 0; i < elements.length; i++) { // 遍历每个元素并移除它们
-                    var element = elements[i];
-                    element.parentNode.removeChild(element); // 或者直接使用 remove() 方法
-                }
-                elements = document.querySelectorAll(".luckySuffix");// 获取所有指定类名为"luckySuffix"的元素
-                console.log("delete all luckySuffix", elements)
+                elements = document.querySelectorAll(".luckyBox");// 获取所有指定类名为"luckyBox"的元素
+                console.log("delete all luckyBox", elements)
                 for (var i = 0; i < elements.length; i++) { // 遍历每个元素并移除它们
                     var element = elements[i];
                     element.parentNode.removeChild(element); // 或者直接使用 remove() 方法
@@ -162,6 +167,18 @@ $(function () {
     });
 });
 
+
+function hide_all_element(element_name){
+    // 获取需要隐藏的父元素
+    var parentElement = document.getElementById(element_name); // element_name为相应的父元素ID
+    
+    // 遍历并隐藏子元素
+    for (let i = 0; i < parentElement.children.length; i++) {
+        var childElement = parentElement.children[i];
+        childElement.style.display = "none";
+    }
+    parentElement.style.display = "none";
+}
 
 //获取excel数据
 function handleFile(event) {
