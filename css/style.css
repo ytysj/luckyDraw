@@ -179,7 +179,7 @@ body {
 body > div {
     position: absolute;
     width: 1920px;
-    height: 1080px;
+    height: 960px;
 }
 
 body > div > header {

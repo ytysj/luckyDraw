@@ -212,12 +212,15 @@ function handleFile(event) {
 
 //抽选一人
 function getRandomPerson() {
-    currentTime = Date.now();//TODO:
-    var randomIndex = Math.floor(Math.random() * allPerson.length);
+    //****************************************此处为随机数产生逻辑 *//
+    let array = new Uint32Array(1);
+    window.crypto.getRandomValues(array);
+    var randomIndex = array[0]%(allPerson.length);
     var selectedPerson = allPerson[randomIndex];
 
     // 从数组中移除已抽取的人员
     allPerson.splice(randomIndex, 1);
+    console.log("randomIndex:", randomIndex);
     console.log("getRandomPerson:", allPerson);
 
     return selectedPerson;
