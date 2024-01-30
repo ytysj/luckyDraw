@@ -52,25 +52,24 @@ $(function () {
             else if(cur_gift_idx<fourth_gift_num+third_gift_num){
                 display_id = "gift3";
                 document.getElementById("giftTitle3").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
+                document.getElementById("giftTitle4").className="hide";//隐藏四等奖
+                hide_all_element("gift4");
             }
             else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num){
                 display_id = "gift2";
                 document.getElementById("giftTitle2").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
-
-                document.getElementById("giftTitle4").className="hide";//隐藏四等奖
+                document.getElementById("giftTitle4").className="hide";//隐藏四等奖和三等奖
                 hide_all_element("gift4");
-                //document.getElementById("gift4").className="hide"
+                document.getElementById("giftTitle3").className="hide"; //隐藏四等奖和三等奖
+                hide_all_element("gift3");
             }
             else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num+first_gift_num){
                 display_id = "gift1";
                 document.getElementById("giftTitle1").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
-
                 document.getElementById("giftTitle4").className="hide";//隐藏四等奖和三等奖
                 hide_all_element("gift4");
-                //document.getElementById("gift4").className="hide"
-                document.getElementById("giftTitle3").className="hide";
+                document.getElementById("giftTitle3").className="hide"; //隐藏四等奖和三等奖
                 hide_all_element("gift3");
-                //document.getElementById("gift3").className="hide"
             }
             else{
                 console.log("WARNING!cur_gift_idx out of range",cur_gift_idx, third_gift_num, second_gift_num, first_gift_num);
