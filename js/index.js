@@ -47,16 +47,22 @@ $(function () {
                         third_gift_num+second_gift_num+first_gift_num);
             if(cur_gift_idx<fourth_gift_num){
                 display_id = "gift4";
+                $("#HintMessage").val("已抽选四等奖("+(cur_gift_idx+1)+"/"+fourth_gift_num+")");
+
                 document.getElementById("giftTitle4").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
             }
             else if(cur_gift_idx<fourth_gift_num+third_gift_num){
                 display_id = "gift3";
+                $("#HintMessage").val("已抽选三等奖("+(cur_gift_idx+1-fourth_gift_num)+"/"+third_gift_num+")");
+
                 document.getElementById("giftTitle3").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
                 document.getElementById("giftTitle4").className="hide";//隐藏四等奖
                 hide_all_element("gift4");
             }
             else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num){
                 display_id = "gift2";
+                $("#HintMessage").val("已抽选二等奖("+(cur_gift_idx+1-fourth_gift_num-third_gift_num)+"/"+second_gift_num+")");
+
                 document.getElementById("giftTitle2").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
                 document.getElementById("giftTitle4").className="hide";//隐藏四等奖和三等奖
                 hide_all_element("gift4");
@@ -65,6 +71,8 @@ $(function () {
             }
             else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num+first_gift_num){
                 display_id = "gift1";
+                $("#HintMessage").val("已抽选一等奖("+(cur_gift_idx+1-fourth_gift_num-third_gift_num-second_gift_num)+"/"+first_gift_num+")");
+
                 document.getElementById("giftTitle1").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
                 document.getElementById("giftTitle4").className="hide";//隐藏四等奖和三等奖
                 hide_all_element("gift4");
@@ -148,6 +156,7 @@ $(function () {
                 document.getElementById("giftTitle2").className="hide";
                 document.getElementById("giftTitle1").className="hide";
                 document.getElementById('fileInput').value = '';
+                $("#HintMessage").val("");//去除提示
 
                 //删除所有抽奖人名
                 elements = document.querySelectorAll(".luckyBox");// 获取所有指定类名为"luckyBox"的元素

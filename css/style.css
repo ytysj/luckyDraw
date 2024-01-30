@@ -369,6 +369,16 @@ body > div > footer > div > div#cfgPage {
     border-radius: 10px;
 }
 
+#HintMessage{
+    background-color: transparent;
+    border: none;
+    color: white;
+    position: absolute;
+    font-size: 2rem;
+    bottom: -35px;
+    right: 10px;
+}
+
 
 #pageDevInfo{
     position: fixed;
