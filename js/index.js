@@ -48,21 +48,21 @@ $(function () {
             //确定奖品类型            
             var display_id = "gift4";
             var cur_get_num = 1; //当前抽选次数
+            var hint_msg = "";
             
             console.log("正在抽取cur_gift_idx：", cur_gift_idx, fourth_gift_num+third_gift_num+second_gift_num, 
                         third_gift_num+second_gift_num+first_gift_num);
-            console.log("当前抽选次数:", cur_get_num);
             if(cur_gift_idx<fourth_gift_num){
                 cur_get_num = fourth_once_num;
                 display_id = "gift4";
-                $("#HintMessage").val("已抽选四等奖("+(cur_gift_idx+cur_get_num)+"/"+fourth_gift_num+")");
+                hint_msg = "已抽选四等奖("+(cur_gift_idx+cur_get_num)+"/"+fourth_gift_num+")";
 
                 document.getElementById("giftTitle4").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
             }
             else if(cur_gift_idx<fourth_gift_num+third_gift_num){
                 cur_get_num = third_once_num;
                 display_id = "gift3";
-                $("#HintMessage").val("已抽选三等奖("+(cur_gift_idx+cur_get_num-fourth_gift_num)+"/"+third_gift_num+")");
+                hint_msg = "已抽选三等奖("+(cur_gift_idx+cur_get_num-fourth_gift_num)+"/"+third_gift_num+")";
 
                 document.getElementById("giftTitle3").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
                 document.getElementById("giftTitle4").className="hide";//隐藏四等奖
@@ -71,7 +71,7 @@ $(function () {
             else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num){
                 cur_get_num = second_once_num;
                 display_id = "gift2";
-                $("#HintMessage").val("已抽选二等奖("+(cur_gift_idx+cur_get_num-fourth_gift_num-third_gift_num)+"/"+second_gift_num+")");
+                hint_msg = "已抽选二等奖("+(cur_gift_idx+cur_get_num-fourth_gift_num-third_gift_num)+"/"+second_gift_num+")";
 
                 document.getElementById("giftTitle2").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
                 document.getElementById("giftTitle4").className="hide";//隐藏四等奖和三等奖
@@ -82,7 +82,7 @@ $(function () {
             else if(cur_gift_idx<fourth_gift_num+third_gift_num+second_gift_num+first_gift_num){
                 cur_get_num = first_once_num;
                 display_id = "gift1";
-                $("#HintMessage").val("已抽选一等奖("+(cur_gift_idx+cur_get_num-fourth_gift_num-third_gift_num-second_gift_num)+"/"+first_gift_num+")");
+                hint_msg = "已抽选一等奖("+(cur_gift_idx+cur_get_num-fourth_gift_num-third_gift_num-second_gift_num)+"/"+first_gift_num+")";
 
                 document.getElementById("giftTitle1").className="giftTitle"; //把奖品标题的class，从hide设置为giftTitle
                 document.getElementById("giftTitle4").className="hide";//隐藏四等奖和三等奖
@@ -94,6 +94,8 @@ $(function () {
                 console.log("WARNING!cur_gift_idx out of range",cur_get_num, cur_gift_idx, fourth_gift_num, third_gift_num, second_gift_num, first_gift_num);
                 return null;
             }
+            console.log("当前抽选次数:", cur_get_num);
+            $("#HintMessage").val(hint_msg);
 
             //设置样式
             $("#btnStart").text("开始");//设置按钮文本为开始
@@ -130,6 +132,7 @@ $(function () {
                 element.appendChild(newBox);
             }
 
+            console.log("==============="+hint_msg+"===============");//打印抽选数量和奖品次数
             cur_gift_idx += cur_get_num;
         }
     });
@@ -183,7 +186,7 @@ $(function () {
                 $("#cfgPage").fadeOut();
                 cfg_page_visible = false;
                 $("#btnCfg").text("配置");
-                console.log("已应用配置");
+                console.log("===============已应用配置===============");
             });
 
         }
