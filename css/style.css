@@ -362,11 +362,12 @@ body > div > footer > div > button#btnCfg {
 
 body > div > footer > div > div#cfgPage {
     position: absolute;
-    top: 5px;
+    top: -50px;
     right: -280px;
     width: 350px;
     background-color: #fd6f68;
     border-radius: 10px;
+    text-align: left;
 }
 
 #HintMessage{
